@@ -29,18 +29,18 @@ const updateTodo=(existing_todo, new_todo)=>{
    const data = fs.readFileSync(filepath,"utf8");
    const todoArr= JSON.parse(data);
 
-   let deleteElementIndex=0;
+   let deletedElementIndex=0;
 
    const filterTodo=todoArr.filter((todo,index)=>{
     if(todo.toLowerCase() == existing_todo.toLowerCase()){
-        deleteElementIndex= index;
+        deletedElementIndex= index;
         return false
     }else{
         return true
     }
    })
 
-filterTodo.splice(deleteElementIndex,0,new_todo);
+filterTodo.splice(deletedElementIndex, 0, new_todo);
 
 fs.writeFileSync(filepath,JSON.stringify(filterTodo), "utf8");
 console.log("Todo updated from", existing_todo,"to", new_todo )
