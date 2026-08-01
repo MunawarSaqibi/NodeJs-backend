@@ -52,6 +52,30 @@ app.post("/signin",(req,res)=>{
 
 })
 
+app.get("/me",(req,res)=>{
+    const {token}=req.headers
+
+    const jwtPayload=jwt.verify(token, JWT_SECRET)
+
+    if(jwtPayload==undefined){
+        res.json({
+            "msg":"invalid credientials/ You are not allowed to access this data"
+        })
+    }
+
+
+    const verifiedUserData= users.find((userObj)=>{
+        if(userObj.username === jwtPayload.username){
+            return true
+        }
+    })
+
+    res.json({
+        "msg":"you are eligible to get data",
+        "data": verifiedUserData
+    })
+})
+
 
 app.listen("8080",()=>{
     console.log("server is listening at port 8080");
