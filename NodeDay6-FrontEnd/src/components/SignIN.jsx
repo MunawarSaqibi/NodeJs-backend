@@ -20,7 +20,9 @@ const SignIN = () => {
 
       const token = response.data?.token || response.data?.data?.token;
       if (token) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", response.data.token);
+        window.location.reload();
+        setToken(response.data.token);
       }
 
       alert("Login Successful!");

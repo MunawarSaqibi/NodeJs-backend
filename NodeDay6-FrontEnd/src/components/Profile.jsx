@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import SignUp from "./SignUp";
+import SignIN from "./SignIN";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -17,6 +19,27 @@ const Profile = () => {
     console.log(response.data);
     setProfileData(response.data);
   }
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    setProfileData(null);
+    window.location.reload();
+
+    {
+      !profileData ? (
+        <div>
+          <SignUp />
+          <SignIN />
+        </div>
+      ) : (
+        <div>
+          <Profile />
+          <Logout />
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <h1>Profile Section:</h1>
@@ -36,6 +59,14 @@ const Profile = () => {
       ) : (
         <div> Loading...</div>
       )}
+
+      <button
+        onClick={() => {
+          Logout();
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };
